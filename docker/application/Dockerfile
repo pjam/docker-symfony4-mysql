@@ -39,6 +39,8 @@ RUN apt-get update && apt-get install -y \
       zip \
       opcache
 
+RUN echo 'alias ll="ls -la"' >> /root/.bashrc
+
 COPY docker/application/symfony.conf /etc/apache2/sites-available/symfony.conf
 RUN a2dissite 000-default.conf && a2ensite symfony.conf && a2enmod rewrite
 
@@ -46,5 +48,3 @@ COPY --from=vendor /app/vendor/ /var/www/html/vendor/
 
 #COPY --chown=www-data:www-data htdocs /var/www/html
 COPY htdocs /var/www/html
-
-RUN echo 'alias ll="ls -la"' >> /root/.bashrc
