@@ -26,7 +26,7 @@ RUN apt-get update && apt-get install -y \
       zlib1g-dev \
       vim curl debconf subversion git apt-transport-https apt-utils \
       build-essential locales acl mailutils wget zip unzip \
-      gnupg gnupg1 gnupg2
+      gnupg gnupg1 gnupg2 \
     && rm -r /var/lib/apt/lists/* \
     && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
     && docker-php-ext-install \
