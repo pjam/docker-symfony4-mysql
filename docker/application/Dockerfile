@@ -24,7 +24,7 @@ RUN apt-get update && apt-get install -y \
       libicu-dev \
       libpq-dev \
       zlib1g-dev \
-      vim curl debconf subversion git apt-transport-https apt-utils \
+      vim curl debconf subversion git apt-transport-https apt-utils iproute2 \
       build-essential locales acl mailutils wget zip unzip \
       gnupg gnupg1 gnupg2 \
     && rm -r /var/lib/apt/lists/* \
@@ -38,6 +38,12 @@ RUN apt-get update && apt-get install -y \
       pgsql \
       zip \
       opcache
+
+RUN pecl install xdebug
+
+COPY docker/application/disable-xdebug.sh /disable-xdebug.sh
+COPY docker/application/enable-xdebug.sh /enable-xdebug.sh
+RUN chmod +x /disable-xdebug.sh /enable-xdebug.sh
 
 RUN echo 'alias ll="ls -la"' >> /root/.bashrc
 
