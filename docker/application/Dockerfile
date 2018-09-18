@@ -45,6 +45,8 @@ COPY docker/application/disable-xdebug.sh /disable-xdebug.sh
 COPY docker/application/enable-xdebug.sh /enable-xdebug.sh
 RUN chmod +x /disable-xdebug.sh /enable-xdebug.sh
 
+COPY htdocs/.env.dist /var/www/html/.env
+
 RUN echo 'alias ll="ls -la"' >> /root/.bashrc
 
 COPY docker/application/symfony.conf /etc/apache2/sites-available/symfony.conf
