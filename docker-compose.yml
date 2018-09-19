@@ -17,6 +17,8 @@ services:
       - database
     volumes:
       - ./htdocs:/var/www/html
+    env_file:
+      - ./docker/app.env
 
   database:
     image: mysql:5.7

@@ -45,8 +45,6 @@ COPY docker/application/disable-xdebug.sh /disable-xdebug.sh
 COPY docker/application/enable-xdebug.sh /enable-xdebug.sh
 RUN chmod +x /disable-xdebug.sh /enable-xdebug.sh
 
-COPY htdocs/.env.dist /var/www/html/.env
-
 RUN echo 'alias ll="ls -la"' >> /root/.bashrc
 
 COPY docker/application/symfony.conf /etc/apache2/sites-available/symfony.conf
@@ -54,5 +52,4 @@ RUN a2dissite 000-default.conf && a2ensite symfony.conf && a2enmod rewrite
 
 COPY --from=vendor /app/vendor/ /var/www/html/vendor/
 
-#COPY --chown=www-data:www-data htdocs /var/www/html
 COPY htdocs /var/www/html
