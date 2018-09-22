@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
 if [ "$1" == "build" ]; then
-    docker-compose build
+    docker-compose build ${@:2:99}
+elif [ "$1" == "rebuild" ]; then
+    docker-compose build --no-cache
 elif [ "$1" == "start" ]; then
-    docker-compose up -d
+    docker-compose up -d ${@:2:99}
 elif [ "$1" == "stop" ]; then
     docker-compose stop
 elif [ "$1" == "clean" ]; then
@@ -11,3 +13,4 @@ elif [ "$1" == "clean" ]; then
 else
     echo "Unknown docker/docker-compose command $1"
 fi
+

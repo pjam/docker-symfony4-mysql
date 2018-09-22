@@ -1,0 +1,23 @@
+#!/bin/sh
+
+set -e
+
+echo "Started entrypoint"
+
+if [ ! -e "/var/www/html/vendor" ]; then
+    echo "No vendor folder found, copying from /var/www..."
+    cp -R /var/www/vendor /var/www/html/vendor
+fi
+
+if [ ! -r "/var/www/html/.env" ]; then
+    echo "No .env found, copying from .env.dist..."
+    cp /var/www/html/.env.dist /var/www/html/.env
+fi
+
+# first arg is `-f` or `--some-option`
+if [ "${1#-}" != "$1" ]; then
+	set -- apache2-foreground "$@"
+fi
+
+exec "$@"
+

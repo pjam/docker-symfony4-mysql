@@ -19,7 +19,6 @@ RUN composer install \
 #
 FROM php:7.2-apache-stretch
 
-
 RUN apt-get update && apt-get install -y \
       libicu-dev \
       libpq-dev \
@@ -41,15 +40,19 @@ RUN apt-get update && apt-get install -y \
 
 RUN pecl install xdebug
 
+ENTRYPOINT ["entrypoint"]
+
+RUN echo "ServerName $(/sbin/ip route|awk '/default/ { print $3 }')" >> /etc/apache2/apache2.conf
+RUN echo 'alias ll="ls -la"' >> /root/.bashrc
+
 COPY docker/application/disable-xdebug.sh /disable-xdebug.sh
 COPY docker/application/enable-xdebug.sh /enable-xdebug.sh
-RUN chmod +x /disable-xdebug.sh /enable-xdebug.sh
-
-RUN echo 'alias ll="ls -la"' >> /root/.bashrc
+COPY docker/application/entrypoint /usr/local/bin/entrypoint
+RUN chmod +x /disable-xdebug.sh /enable-xdebug.sh /usr/local/bin/entrypoint
 
 COPY docker/application/symfony.conf /etc/apache2/sites-available/symfony.conf
 RUN a2dissite 000-default.conf && a2ensite symfony.conf && a2enmod rewrite
 
-COPY --from=vendor /app/vendor/ /var/www/html/vendor/
+COPY --from=vendor /app/vendor /var/www/vendor
+CMD ["apache2-foreground"]
 
-COPY htdocs /var/www/html
