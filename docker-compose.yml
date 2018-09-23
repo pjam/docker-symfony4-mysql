@@ -12,13 +12,12 @@ services:
     links:
       - database
       - redis
+      - maildev
     depends_on:
       - maildev
       - database
     volumes:
       - ./htdocs:/var/www/html
-    env_file:
-      - ./docker/app.env
 
   database:
     image: mysql:5.7
@@ -29,9 +28,6 @@ services:
       MYSQL_USER: sf4
       MYSQL_PASSWORD: sf4
       MYSQL_ROOT_PASSWORD: rootsecret
-
-  redis:
-    image: redis:latest
     
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
