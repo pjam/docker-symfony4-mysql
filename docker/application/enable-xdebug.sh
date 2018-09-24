@@ -16,4 +16,5 @@ if [ ! -f "${XDEBUG_INI_FILE}" ]; then
     sed -i "1 a xdebug.remote_host=${HOST_IP}" "${XDEBUG_INI_FILE}"
     sed -i '1 a xdebug.remote_enable=1' "${XDEBUG_INI_FILE}"
     sed -i '1 a xdebug.max_nesting_level=400' "${XDEBUG_INI_FILE}"
+    sed -i '1 a xdebug.remote_host=host.docker.internal' "${XDEBUG_INI_FILE}"
 fi
