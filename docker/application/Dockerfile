@@ -24,7 +24,7 @@ RUN apt-get update && apt-get install -y \
       libpq-dev \
       zlib1g-dev \
       vim curl debconf subversion git apt-transport-https apt-utils iproute2 \
-      build-essential locales acl mailutils wget zip unzip \
+      build-essential locales acl mailutils wget zip unzip iputils-ping \
       gnupg gnupg1 gnupg2 \
     && rm -r /var/lib/apt/lists/* \
     && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
