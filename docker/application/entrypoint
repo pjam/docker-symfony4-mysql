@@ -14,20 +14,16 @@ if [ ! -r "/var/www/html/.env" ]; then
     cp /var/www/html/.env.dist /var/www/html/.env
 fi
 
+set +e
 # create hosts entry for host using host.docker.internal to enable xdebug easily
 # in all host environments (Linux, Windows, Mac)
-echo "a"
 HOST_DOMAIN="host.docker.internal"
-echo "b"
-ping -q -c1 host.docker.internal > /dev/null 2>&1
-echo "c"
+ping -q -c1 $HOST_DOMAIN > /dev/null 2>&1
 if [ $? -ne 0 ]; then
-  echo "d"
   HOST_IP=$(ip route|awk '/default/ { print $3 }')
-  echo "e"
-  echo -e "$HOST_IP\t$HOST_DOMAIN" >> /etc/hosts
-  echo "f"
+  printf '%s\t%s\n' "$HOST_IP" "$HOST_DOMAIN" >> /etc/hosts
 fi
+set -e
 
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then
