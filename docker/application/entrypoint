@@ -16,11 +16,17 @@ fi
 
 # create hosts entry for host using host.docker.internal to enable xdebug easily
 # in all host environments (Linux, Windows, Mac)
+echo "a"
 HOST_DOMAIN="host.docker.internal"
-ping -q -c1 $HOST_DOMAIN > /dev/null 2>&1
+echo "b"
+ping -q -c1 host.docker.internal > /dev/null 2>&1
+echo "c"
 if [ $? -ne 0 ]; then
+  echo "d"
   HOST_IP=$(ip route|awk '/default/ { print $3 }')
+  echo "e"
   echo -e "$HOST_IP\t$HOST_DOMAIN" >> /etc/hosts
+  echo "f"
 fi
 
 # first arg is `-f` or `--some-option`
