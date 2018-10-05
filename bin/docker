@@ -9,7 +9,7 @@ elif [ "$1" == "start" ]; then
 elif [ "$1" == "stop" ]; then
     docker-compose stop
 elif [ "$1" == "clean" ]; then
-    docker-compose down
+    docker-compose down ${@:2:99}
 else
     echo "Unknown docker/docker-compose command $1"
 fi
