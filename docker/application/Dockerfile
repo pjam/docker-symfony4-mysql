@@ -7,6 +7,8 @@ WORKDIR /app
 COPY htdocs/composer.json composer.json
 COPY htdocs/composer.lock composer.lock
 
+RUN composer global require hirak/prestissimo
+
 RUN composer install \
     --ignore-platform-reqs \
     --no-interaction \
@@ -53,6 +55,7 @@ RUN chmod +x /disable-xdebug.sh /enable-xdebug.sh /usr/local/bin/entrypoint
 COPY docker/application/symfony.conf /etc/apache2/sites-available/symfony.conf
 RUN a2dissite 000-default.conf && a2ensite symfony.conf && a2enmod rewrite
 
+COPY --from=vendor /usr/bin/composer /usr/bin/composer
 COPY --from=vendor /app/vendor /var/www/vendor
 CMD ["apache2-foreground"]
 
